@@ -1,0 +1,52 @@
+/*
+  Archerfile
+
+  A package build and system/software configuration DSL
+
+  Sections
+
+  pkg - Package metadata utilized by builder and for repository generation
+
+  requirement - Dependency modeling
+
+  build - Build settings
+
+  Global
+
+  env.VAR: environment variables
+
+  Functions
+
+  timestamp: get a UTC timestamp
+*/
+
+pkg {
+  name = "test-package"
+  description = "Archer test package"
+  vendor = "Solvent"
+  maintainer = "Solvent"
+  url = "http://solvent.io"
+  license = "Apache 2.0"
+  arch = "x86_64"
+  version = "1.0.0"
+  iteration = "${timestamp()}"
+  branch = "master"
+  vcs_revision = "04a1c65c1f0c144a1b830f6ab46d1ee43c5251c7"
+}
+
+requirement {
+  name = "dep-package"
+  method = "depends"
+  operation = "ANY"
+  version = ""
+}
+
+build {
+  //target_path = "/home/nacho"
+  //work_path = "/tmp"
+  //out_path = "/home/nacho/pkg"
+  file_user = "root"
+  file_group = "root"
+  rpm = true
+  deb = true
+}

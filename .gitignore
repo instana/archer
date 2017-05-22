@@ -1,0 +1,8 @@
+.DS_Store
+dist/
+*.iml
+.idea/
+*.rpm
+*.deb
+test/archer-scripts
+test/build
