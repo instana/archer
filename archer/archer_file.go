@@ -22,7 +22,7 @@ func NewArcherFile(path string) *ArcherFile {
 func (a *ArcherFile) variables(root ast.Node) ([]string, error) {
 	var result []string
 	var resultErr error
-	
+
 	fn := func(n ast.Node) ast.Node {
 		if resultErr != nil {
 			return n
