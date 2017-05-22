@@ -6,3 +6,4 @@ dist/
 *.deb
 test/archer-scripts
 test/build
+test/pkg
