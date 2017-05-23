@@ -222,7 +222,7 @@ func (b *Builder) pkg(format string, pkg *action.Pkg) error {
 		return errors.New(fmt.Sprint("fpm: ", format, "build failed"))
 	}
 
-	b.Emit("complete", fmt.Sprint(format, " ", pkg.Version, "-", pkg.Iteration))
+	b.Emit("complete", fmt.Sprint(format, " ", pkg.Version, "-", pkg.Iteration, " ", pkg.Arch))
 
 	return nil
 }

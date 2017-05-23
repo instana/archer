@@ -25,7 +25,7 @@ func (a *ArcherBuildCommand) Run(args []string) int {
 	builder.AfPath(cmdFlags.Arg(0)).Debug(a.Debug)
 
 	builder.On("complete", func(pkg string) {
-		a.Ui.Warn(fmt.Sprint("Wrote => pkg ", pkg))
+		a.Ui.Warn(fmt.Sprint("Wrote => ", pkg))
 	})
 
 	err = builder.Build()
