@@ -199,6 +199,34 @@ func (b *Builder) writePackageConf(pkg string) error {
 	return err
 }
 
+func (b *Builder) pkg(format string, pkg *action.Pkg) error {
+	pkgBuilder, err := NewFpm(format, b.workPath, b.outputPath, b.targetPath, b.debug)
+	if err != nil {
+		return err
+	}
+
+	pkgBuilder.Name(pkg.Name).
+		FileGroup(b.fileGroup).
+		FileUser(b.fileGroup).
+		Arch(pkg.Arch).
+		Version(pkg.Version).
+		Iteration(pkg.Iteration).
+		Description(pkg.Description).
+		Vendor(pkg.Vendor).
+		Maintainer(pkg.Maintainer).
+		Url(pkg.Url).
+		License(pkg.License)
+
+	err = pkgBuilder.Run()
+	if err != nil {
+		return errors.New(fmt.Sprint("fpm: ", format, "build failed"))
+	}
+
+	b.Emit("complete", fmt.Sprint(format, " ", pkg.Version, "-", pkg.Iteration))
+
+	return nil
+}
+
 func (b *Builder) Build() error {
 	err := b.setPaths()
 	if err != nil {
@@ -233,55 +261,17 @@ func (b *Builder) Build() error {
 	}
 
 	if b.buildRpm == true {
-		rpmBuilder, err := NewFpm("rpm", b.workPath, b.outputPath, b.targetPath, b.debug)
+		err = b.pkg("rpm", pkg)
 		if err != nil {
 			return err
 		}
-
-		rpmBuilder.Name(pkg.Name).
-			FileGroup(b.fileGroup).
-			FileUser(b.fileGroup).
-			Arch(pkg.Arch).
-			Version(pkg.Version).
-			Iteration(pkg.Iteration).
-			Description(pkg.Description).
-			Vendor(pkg.Vendor).
-			Maintainer(pkg.Maintainer).
-			Url(pkg.Url).
-			License(pkg.License)
-
-		err = rpmBuilder.Run()
-		if err != nil {
-			return errors.New("fpm: rpm build failed")
-		}
-
-		b.Emit("complete", fmt.Sprint("rpm ", pkg.Version, "-", pkg.Iteration))
 	}
 
 	if b.buildDeb == true {
-		debBuilder, err := NewFpm("deb", b.workPath, b.outputPath, b.targetPath, b.debug)
+		err = b.pkg("deb", pkg)
 		if err != nil {
 			return err
 		}
-
-		debBuilder.Name(pkg.Name).
-			FileGroup(b.fileGroup).
-			FileUser(b.fileGroup).
-			Arch(pkg.Arch).
-			Version(pkg.Version).
-			Iteration(pkg.Iteration).
-			Description(pkg.Description).
-			Vendor(pkg.Vendor).
-			Maintainer(pkg.Maintainer).
-			Url(pkg.Url).
-			License(pkg.License)
-
-		err = debBuilder.Run()
-		if err != nil {
-			return errors.New("fpm: deb build failed")
-		}
-
-		b.Emit("complete", fmt.Sprint("deb ", pkg.Version, "-", pkg.Iteration))
 	}
 
 	return err
