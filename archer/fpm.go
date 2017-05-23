@@ -52,12 +52,25 @@ func (f *Fpm) addArg(args ...string) {
 }
 
 func (f *Fpm) Arch(arch string) *Fpm {
-	switch f.format {
-	case "rpm":
-		f.addArg("-a", "noarch")
-	default:
-		f.addArg("-a", arch)
+	switch arch {
+	case "x86_64":
+		switch f.format {
+		case "deb":
+			f.addArg("-a", "amd64")
+		case "rpm":
+			f.addArg("-a", arch)
 
+		}
+	case "none":
+		switch f.format {
+		case "deb":
+			f.addArg("-a", "all")
+		case "rpm":
+			f.addArg("-a", "noarch")
+
+		}
+	default:
+		f.addArg("-a", "amd64")
 	}
 
 	return f
