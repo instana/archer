@@ -67,6 +67,46 @@ func (p *Pkg) Validate() error {
 		error = multierror.Append(error, err)
 	}
 
+	err = p.validateVendor()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateMaintainer()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateUrl()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateLicense()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateVersion()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateIteration()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateBranch()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = p.validateVcsRevision()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
 	return error.ErrorOrNil()
 }
 
@@ -98,6 +138,70 @@ func (p *Pkg) validateArch() error {
 func (p *Pkg) validateDescription() error {
 	if p.Description == "" {
 		return errors.New("action pkg:description required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateVendor() error {
+	if p.Vendor == "" {
+		return errors.New("action pkg:vendor required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateMaintainer() error {
+	if p.Maintainer == "" {
+		return errors.New("action pkg:maintainer required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateUrl() error {
+	if p.Url == "" {
+		return errors.New("action pkg:url required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateLicense() error {
+	if p.License == "" {
+		return errors.New("action pkg:license required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateVersion() error {
+	if p.Version == "" {
+		return errors.New("action pkg:version required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateIteration() error {
+	if p.Iteration == "" {
+		return errors.New("action pkg:iteration required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateBranch() error {
+	if p.Branch == "" {
+		return errors.New("action pkg:branch required")
+	}
+
+	return nil
+}
+
+func (p *Pkg) validateVcsRevision() error {
+	if p.Branch == "" {
+		return errors.New("action pkg:vcs_revision required")
 	}
 
 	return nil
