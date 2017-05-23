@@ -13,7 +13,7 @@
 
   Global
 
-  env.: environment variables ${env.VAR_NAME}
+  env.VAR_NAME: environment variables
 
   Functions
 

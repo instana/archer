@@ -8,6 +8,7 @@ import (
 
 	"github.com/chuckpreslar/emission"
 	"github.com/instana/archer/action"
+	"fmt"
 )
 
 type Builder struct {
@@ -100,7 +101,10 @@ func (b *Builder) loadArcherfile() error {
 	af := NewArcherFile(b.afPath)
 
 	afResult, err := af.Load()
-
+	if err != nil {
+		return err
+	}
+	
 	err = b.config.Load(afResult)
 	if err != nil {
 		return err
@@ -208,16 +212,16 @@ func (b *Builder) Build() error {
 
 	b.setBuild()
 
-	err = b.writeScripts()
-	if err != nil {
-		return err
-	}
-
 	filter := b.config.Section("pkg")
 	if len(filter) == 0 {
 		return errors.New("builder: no pkg definition found")
 	}
 	pkg := filter[0].(*action.Pkg)
+
+	err = b.writeScripts()
+	if err != nil {
+		return err
+	}
 
 	err = b.writePackageConf(pkg.Name)
 	if err != nil {
