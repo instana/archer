@@ -8,6 +8,7 @@ import (
 
 	"github.com/chuckpreslar/emission"
 	"github.com/instana/archer/action"
+	"fmt"
 )
 
 type Builder struct {
@@ -253,6 +254,8 @@ func (b *Builder) Build() error {
 		if err != nil {
 			return errors.New("fpm: rpm build failed")
 		}
+
+		b.Emit("complete", fmt.Sprint("rpm ", pkg.Version, "-", pkg.Iteration))
 	}
 
 	if b.buildDeb == true {
@@ -277,6 +280,8 @@ func (b *Builder) Build() error {
 		if err != nil {
 			return errors.New("fpm: deb build failed")
 		}
+
+		b.Emit("complete", fmt.Sprint("deb ", pkg.Version, "-", pkg.Iteration))
 	}
 
 	return err
