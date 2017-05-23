@@ -183,7 +183,7 @@ func (b *Builder) writePackageConf(pkg string) error {
 
 	confDir := path.Join(b.targetPath, ConfPath)
 
-	if _, err = os.Stat(confDir); os.IsNotExist(err) {
+	if _, derr := os.Stat(confDir); os.IsNotExist(derr) {
 		os.MkdirAll(confDir, os.FileMode(0750))
 	}
 
@@ -224,7 +224,7 @@ func (b *Builder) Build() error {
 		return err
 	}
 
-	if _, err = os.Stat(b.outputPath); os.IsNotExist(err) {
+	if _, derr := os.Stat(b.outputPath); os.IsNotExist(derr) {
 		os.Mkdir(b.outputPath, os.FileMode(0750))
 	}
 
