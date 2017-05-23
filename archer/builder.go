@@ -215,7 +215,9 @@ func (b *Builder) pkg(format string, pkg *action.Pkg) error {
 		Vendor(pkg.Vendor).
 		Maintainer(pkg.Maintainer).
 		Url(pkg.Url).
-		License(pkg.License)
+		License(pkg.License).
+		Branch(pkg.Branch).
+		VcsRevision(pkg.VcsRevision)
 
 	err = pkgBuilder.Run()
 	if err != nil {

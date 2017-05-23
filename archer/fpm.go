@@ -118,6 +118,27 @@ func (f *Fpm) Maintainer(maintainer string) *Fpm {
 	return f
 }
 
+func (f *Fpm) Branch(branch string) *Fpm {
+	switch f.format {
+	case "deb":
+		f.addArg("--deb-field", fmt.Sprint("Branch: ", branch))
+	case "rpm":
+		f.addArg("--rpm-tag", fmt.Sprint("Branch: ", branch))
+	}
+
+	return f
+}
+
+func (f *Fpm) VcsRevision(vcsRev string) *Fpm {
+	switch f.format {
+	case "deb":
+		f.addArg("--deb-field", fmt.Sprint("VcsRevision: ", vcsRev))
+	case "rpm":
+		f.addArg("--rpm-tag", fmt.Sprint("VcsRevision: ", vcsRev))
+	}
+	return f
+}
+
 func (f *Fpm) Url(url string) *Fpm {
 	f.addArg("--url", url)
 
