@@ -8,7 +8,6 @@ import (
 
 	"github.com/chuckpreslar/emission"
 	"github.com/instana/archer/action"
-	"fmt"
 )
 
 type Builder struct {
@@ -104,7 +103,7 @@ func (b *Builder) loadArcherfile() error {
 	if err != nil {
 		return err
 	}
-	
+
 	err = b.config.Load(afResult)
 	if err != nil {
 		return err
