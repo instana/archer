@@ -123,7 +123,7 @@ func (f *Fpm) Branch(branch string) *Fpm {
 	case "deb":
 		f.addArg("--deb-field", fmt.Sprint("Branch: ", branch))
 	case "rpm":
-		f.addArg("--rpm-tag", fmt.Sprint("Branch: ", branch))
+		// f.addArg("--rpm-tag", fmt.Sprint("Branch: ", branch))
 	}
 
 	return f
@@ -134,7 +134,7 @@ func (f *Fpm) VcsRevision(vcsRev string) *Fpm {
 	case "deb":
 		f.addArg("--deb-field", fmt.Sprint("VcsRevision: ", vcsRev))
 	case "rpm":
-		f.addArg("--rpm-tag", fmt.Sprint("VcsRevision: ", vcsRev))
+		//f.addArg("--rpm-tag", fmt.Sprint("VcsRevision: ", vcsRev))
 	}
 	return f
 }
