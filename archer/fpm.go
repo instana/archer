@@ -158,6 +158,10 @@ func (f *Fpm) FileGroup(group string) *Fpm {
 }
 
 func (f *Fpm) Run() error {
+	if f.debug {
+		f.addArg("--debug-workspace")
+	}
+
 	f.addArg(".")
 
 	if out, err := exec.Command("fpm", f.args...).CombinedOutput(); err != nil {
