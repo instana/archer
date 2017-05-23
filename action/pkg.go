@@ -88,7 +88,7 @@ func (p *Pkg) validateName() error {
 }
 
 func (p *Pkg) validateArch() error {
-	if p.Arch != "x86_64" && p.Arch != "all" {
+	if p.Arch != "x86_64" && p.Arch != "none" {
 		return errors.New("action pkg:arch is unsupported")
 	}
 
