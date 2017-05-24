@@ -220,6 +220,13 @@ func (b *Builder) pkg(format string, pkg *action.Pkg) error {
 		Branch(pkg.Branch).
 		VcsRevision(pkg.VcsRevision)
 
+	reqs := b.config.Section("requirement")
+
+	for _, req := range reqs {
+		r := req.(*action.Requirement)
+		pkgBuilder.Requirement(r.Name, r.Operation, r.Version)
+	}
+	
 	err = pkgBuilder.Run()
 	if err != nil {
 		return errors.New(fmt.Sprint("fpm: ", format, "build failed"))
