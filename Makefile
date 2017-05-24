@@ -1,5 +1,9 @@
+NAME="archer"
+VERSION="0.0.1"
+ITERATION="1"
+DESCRIPTION="This is probably how you get ants, Archer"
 
-all: archer
+all: archer deb
 
 clean:
 	rm -rf dist
@@ -24,6 +28,17 @@ archer: clean deps
 	mkdir -p dist/usr/lib/archer/package.d
 	mkdir -p dist/var/lib/archer
 	go build -o dist/usr/bin/archer github.com/instana/archer/cmd/archer
+
+deb:
+	which fpm || { echo "fpm must be installed and present in PATH for deb build"; exit 0 }
+	fpm -t deb -s dir -C dist -n $(NAME) \
+		-v $(VERSION) \
+		--description '$(DESCRIPTION)' \
+		-a amd64 \
+		--iteration $(ITERATION) \
+		--deb-user root \
+		--deb-group root \
+		.
 
 fmt:
 	goimports -w .
