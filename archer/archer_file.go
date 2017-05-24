@@ -1,14 +1,15 @@
 package archer
 
 import (
+	"errors"
+	"fmt"
 	"io/ioutil"
-	"time"
 	"os"
+	"strings"
+	"time"
+
 	"github.com/hashicorp/hil"
 	"github.com/hashicorp/hil/ast"
-	"fmt"
-	"strings"
-	"errors"
 )
 
 type ArcherFile struct {
@@ -37,7 +38,7 @@ func (a *ArcherFile) variables(root ast.Node) ([]string, error) {
 				result = append(result, v)
 			}
 			if va, ok := vn.Key.(*ast.VariableAccess); ok {
-				v:= va.Name
+				v := va.Name
 
 				result = append(result, v)
 			}

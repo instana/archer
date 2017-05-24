@@ -1,7 +1,10 @@
 package action
 
 import (
+	"errors"
 	"strings"
+
+	"github.com/hashicorp/go-multierror"
 )
 
 type Requirement struct {
@@ -40,13 +43,60 @@ func (r *Requirement) Type() string {
 }
 
 func (r *Requirement) Valid() bool {
-	if r.Name == "" {
-		return false
-	}
-
-	if r.Method == "" {
+	err := r.Validate()
+	if err != nil {
 		return false
 	}
 
 	return true
+}
+
+func (r *Requirement) Validate() error {
+	var error *multierror.Error
+
+	err := r.validateName()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	err = r.validateMethod()
+	if err != nil {
+		error = multierror.Append(error, err)
+	}
+
+	return error.ErrorOrNil()
+}
+
+func (r *Requirement) validateName() error {
+	if r.Name == "" {
+		return errors.New("action requirement:name required")
+	}
+
+	return nil
+}
+
+func (r *Requirement) validateMethod() error {
+
+	if r.Method == "" {
+		return errors.New("action requirement:method required")
+	}
+
+	if r.Method != "depends" {
+		return errors.New("action requirement:method not supported")
+	}
+
+	return nil
+}
+
+func (r *Requirement) validateOperation() error {
+
+	if r.Operation == "" {
+		return errors.New("action requirement:operation required")
+	}
+
+	if r.Operation != "ANY" {
+		return errors.New("action requirement:operation not supported")
+	}
+
+	return nil
 }

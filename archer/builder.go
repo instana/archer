@@ -6,9 +6,10 @@ import (
 	"os"
 	"path"
 
+	"fmt"
+
 	"github.com/chuckpreslar/emission"
 	"github.com/instana/archer/action"
-	"fmt"
 )
 
 type Builder struct {
