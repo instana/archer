@@ -157,6 +157,14 @@ func (f *Fpm) FileGroup(group string) *Fpm {
 	return f
 }
 
+func (f *Fpm) Requirement(name string, operation string, version string) *Fpm {
+	switch operation {
+	case "ANY":
+		f.addArg("-d", name)
+	}
+	return f
+}
+
 func (f *Fpm) Run() error {
 	if f.debug {
 		f.addArg("--debug-workspace")
